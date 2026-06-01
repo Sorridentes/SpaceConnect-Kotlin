@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "808451836180",
+    "project_id": "gs02-72759",
+    "storage_bucket": "gs02-72759.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:808451836180:android:7488790e95c70143d45a01",
+        "android_client_info": {
+          "package_name": "br.com.thefirst.fiap.spaceconnect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaQFO4lYp1vLU4uJfpu8GALWecsEw43H0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:808451836180:android:3d8e950520158ea8d45a01",
+        "android_client_info": {
+          "package_name": "br.com.thefirst.fiap.spaceconnet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaQFO4lYp1vLU4uJfpu8GALWecsEw43H0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

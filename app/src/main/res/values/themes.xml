@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="Theme.SpaceConnect" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#0B3D91</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/icone</item>
+        <item name="postSplashScreenTheme">@style/Theme.SpaceConnect</item>
+    </style>
 </resources>
