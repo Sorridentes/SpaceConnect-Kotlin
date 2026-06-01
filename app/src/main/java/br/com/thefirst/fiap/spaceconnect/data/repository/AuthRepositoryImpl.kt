@@ -6,9 +6,9 @@ import br.com.thefirst.fiap.spaceconnect.domain.common.Resource
 import br.com.thefirst.fiap.spaceconnect.domain.model.User
 import br.com.thefirst.fiap.spaceconnect.domain.repository.AuthRepository
 
-class AuthRepositoryImpl (
+class AuthRepositoryImpl(
     private val dataSource: FirebaseAuthDataSource
-): AuthRepository{
+) : AuthRepository {
     override suspend fun createUser(
         name: String,
         email: String,
@@ -22,7 +22,7 @@ class AuthRepositoryImpl (
             } else {
                 Resource.Error("Erro ao criar usuário")
             }
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Resource.Error(e.message ?: "Erro desconhecido ao criar usuário")
         }
     }
@@ -39,7 +39,7 @@ class AuthRepositoryImpl (
             } else {
                 Resource.Error("Erro ao fazer login")
             }
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Resource.Error(e.message ?: "Erro desconhecido ao fazer login")
         }
     }
@@ -48,13 +48,8 @@ class AuthRepositoryImpl (
         return try {
             dataSource.signOut()
             Resource.Success(Unit)
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Resource.Error(e.message ?: "Erro desconhecido ao fazer logout")
         }
     }
-
-    fun getCurrentUser(): User? {
-        return dataSource.getCurrentUser()?.toDomain()
-    }
-
 }

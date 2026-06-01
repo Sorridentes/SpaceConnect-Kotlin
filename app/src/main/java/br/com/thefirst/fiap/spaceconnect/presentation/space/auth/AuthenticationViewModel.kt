@@ -80,7 +80,6 @@ class AuthenticationViewModel(
             when (val result = signOutUseCase()) {
                 is Resource.Success -> {
                     _signOutState.value = UiState.Success(result.data)
-                    _currentUser.value = null
                 }
 
                 is Resource.Error -> {
@@ -92,6 +91,5 @@ class AuthenticationViewModel(
                 }
             }
         }
-
     }
 }
