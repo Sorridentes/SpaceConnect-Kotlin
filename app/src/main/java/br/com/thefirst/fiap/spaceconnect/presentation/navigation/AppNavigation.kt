@@ -11,16 +11,18 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import br.com.thefirst.fiap.spaceconnect.presentation.common.UiState
+import br.com.thefirst.fiap.spaceconnect.common.UiState
 import br.com.thefirst.fiap.spaceconnect.presentation.space.auth.AuthenticationScreen
 import br.com.thefirst.fiap.spaceconnect.presentation.space.auth.AuthenticationViewModel
-import br.com.thefirst.fiap.spaceconnect.features.firebase.graphic.space.HomeScreen
+import br.com.thefirst.fiap.spaceconnect.presentation.space.HomeScreen
+import br.com.thefirst.fiap.spaceconnect.presentation.space.TestNasaViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AppNavigation(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     val authViewModel: AuthenticationViewModel = koinViewModel()
+    val homeViewModel: TestNasaViewModel = koinViewModel()
 
     val currentUser = authViewModel.currentUser.collectAsStateWithLifecycle()
     val createUserState by authViewModel.createUserState.collectAsState()
@@ -133,6 +135,7 @@ fun AppNavigation(modifier: Modifier = Modifier) {
         composable(AppRoutes.HOME) {
             HomeScreen(
                 userName = currentUser.value?.name ?: "",
+                onSearchClick = { startDate, endDate -> homeViewModel.fetchAstronomy(startDate, endDate) },
                 onSignOut = { authViewModel.signOut() }
             )
         }

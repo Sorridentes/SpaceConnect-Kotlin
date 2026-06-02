@@ -1,4 +1,4 @@
-package br.com.thefirst.fiap.spaceconnect.features.firebase.graphic.space
+package br.com.thefirst.fiap.spaceconnect.features.firebase.graphic.auth
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

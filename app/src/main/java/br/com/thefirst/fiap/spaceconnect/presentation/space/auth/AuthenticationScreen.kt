@@ -5,8 +5,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import br.com.thefirst.fiap.spaceconnect.features.firebase.graphic.space.SignIn
-import br.com.thefirst.fiap.spaceconnect.features.firebase.graphic.space.SignUp
+import br.com.thefirst.fiap.spaceconnect.features.firebase.graphic.auth.SignIn
+import br.com.thefirst.fiap.spaceconnect.features.firebase.graphic.auth.SignUp
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

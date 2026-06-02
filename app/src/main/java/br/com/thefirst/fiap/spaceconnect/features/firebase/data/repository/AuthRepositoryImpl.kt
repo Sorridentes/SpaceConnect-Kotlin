@@ -2,7 +2,7 @@ package br.com.thefirst.fiap.spaceconnect.features.firebase.data.repository
 
 import br.com.thefirst.fiap.spaceconnect.features.firebase.data.model.toDomain
 import br.com.thefirst.fiap.spaceconnect.features.firebase.data.remote.FirebaseAuthDataSource
-import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.common.Resource
+import br.com.thefirst.fiap.spaceconnect.common.Resource
 import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.model.User
 import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.repository.AuthRepository
 

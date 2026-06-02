@@ -2,12 +2,12 @@ package br.com.thefirst.fiap.spaceconnect.presentation.space.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.common.Resource
+import br.com.thefirst.fiap.spaceconnect.common.Resource
 import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.model.User
 import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.usecase.CreateUserUseCase
 import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.usecase.SignInUseCase
 import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.usecase.SignOutUseCase
-import br.com.thefirst.fiap.spaceconnect.presentation.common.UiState
+import br.com.thefirst.fiap.spaceconnect.common.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 

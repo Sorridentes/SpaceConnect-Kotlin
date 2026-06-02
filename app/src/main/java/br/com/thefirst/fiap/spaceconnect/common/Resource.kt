@@ -1,4 +1,4 @@
-package br.com.thefirst.fiap.spaceconnect.features.firebase.domain.common
+package br.com.thefirst.fiap.spaceconnect.common
 
 sealed class Resource<out T> {
     data object Loading: Resource<Nothing>()

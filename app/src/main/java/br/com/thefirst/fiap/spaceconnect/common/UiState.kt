@@ -1,4 +1,4 @@
-package br.com.thefirst.fiap.spaceconnect.presentation.common
+package br.com.thefirst.fiap.spaceconnect.common
 
 sealed class UiState<out T> {
     data object Initial : UiState<Nothing>()

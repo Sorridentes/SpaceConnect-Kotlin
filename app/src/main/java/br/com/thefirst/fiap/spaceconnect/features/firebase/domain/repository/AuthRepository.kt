@@ -1,6 +1,6 @@
 package br.com.thefirst.fiap.spaceconnect.features.firebase.domain.repository
 
-import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.common.Resource
+import br.com.thefirst.fiap.spaceconnect.common.Resource
 import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.model.User
 
 interface AuthRepository {

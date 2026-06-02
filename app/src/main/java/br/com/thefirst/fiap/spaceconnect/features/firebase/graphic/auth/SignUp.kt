@@ -1,4 +1,4 @@
-package br.com.thefirst.fiap.spaceconnect.features.firebase.graphic.space
+package br.com.thefirst.fiap.spaceconnect.features.firebase.graphic.auth
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -36,9 +36,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.thefirst.fiap.spaceconnect.R
+import br.com.thefirst.fiap.spaceconnect.ui.theme.SpaceConnectTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -116,12 +118,6 @@ fun SignUp(
                 leadingIcon = {
                     Icon(Icons.Default.Lock, null)
                 },
-                trailingIcon = {
-                    Image(
-                        painter = painterResource(R.drawable.olho_bloqueado),
-                        contentDescription = null
-                    )
-                },
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
             )
@@ -134,12 +130,6 @@ fun SignUp(
                 label = { Text("Confirmar Senha") },
                 leadingIcon = {
                     Icon(Icons.Default.CheckCircle, null)
-                },
-                trailingIcon = {
-                    Image(
-                        painter = painterResource(R.drawable.olho_bloqueado),
-                        contentDescription = null
-                    )
                 },
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
@@ -167,5 +157,12 @@ fun SignUp(
             }
         }
     }
+}
 
+@Preview(showBackground = true)
+@Composable
+private fun SignUpPreview() {
+    SpaceConnectTheme {
+        SignUp(onBackClick = {}, onCreateAccount = { _, _, _ -> })
+    }
 }

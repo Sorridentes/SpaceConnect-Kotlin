@@ -1,4 +1,4 @@
-package br.com.thefirst.fiap.spaceconnect.features.firebase.graphic.space
+package br.com.thefirst.fiap.spaceconnect.features.firebase.graphic.auth
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -31,9 +31,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.thefirst.fiap.spaceconnect.R
+import br.com.thefirst.fiap.spaceconnect.ui.theme.SpaceConnectTheme
 
 @Composable
 fun SignIn(
@@ -136,5 +138,16 @@ fun SignIn(
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun SignInPreview() {
+    SpaceConnectTheme {
+        SignIn(
+            onSignIn = { _, _ -> },
+            onCreateAccount = {}
+        )
     }
 }
