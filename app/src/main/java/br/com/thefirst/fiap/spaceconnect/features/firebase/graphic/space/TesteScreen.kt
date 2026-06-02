@@ -1,4 +1,4 @@
-package br.com.thefirst.fiap.spaceconnect.presentation.home
+package br.com.thefirst.fiap.spaceconnect.features.firebase.graphic.space
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,15 +16,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.com.thefirst.fiap.spaceconnect.domain.model.User
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    user: User? = null,
-    onSignOut: () -> Unit,
-    onNavigateToAuth: () -> Unit
+    userName: String,
+    onSignOut: () -> Unit
 ) {
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -47,17 +46,14 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            if (user != null) {
-                Text(text = "Usuário: ${user.name}")
-                Text(text = "Email: ${user.email}")
-            }
+                Text(text = "Usuário: $userName")
+
 
             Spacer(modifier = Modifier.height(32.dp))
 
             Button(
                 onClick = {
                     onSignOut()
-                    onNavigateToAuth()
                 }
             ) {
                 Text("Sair")

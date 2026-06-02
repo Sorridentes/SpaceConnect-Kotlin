@@ -1,5 +1,6 @@
-package br.com.thefirst.fiap.spaceconnect.presentation.space.auth
+package br.com.thefirst.fiap.spaceconnect.features.firebase.graphic.space
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,8 +32,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.thefirst.fiap.spaceconnect.R
@@ -48,6 +51,8 @@ fun SignUp(
     var emailInput by remember { mutableStateOf("") }
     var passwordInput by remember { mutableStateOf("") }
     var confirmPasswordInput by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -117,6 +122,7 @@ fun SignUp(
                         contentDescription = null
                     )
                 },
+                visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -135,6 +141,7 @@ fun SignUp(
                         contentDescription = null
                     )
                 },
+                visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -142,14 +149,19 @@ fun SignUp(
 
             Button(
                 onClick = {
-                    onCreateAccount(nameInput, emailInput, passwordInput)
+                    if (passwordInput == confirmPasswordInput) {
+                        onCreateAccount(nameInput, emailInput, passwordInput)
+                    } else {
+                        Toast.makeText(context, "As senhas não coincidem", Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF0A2E78)
-                )
+                ),
             ) {
                 Text("Criar Conta")
             }

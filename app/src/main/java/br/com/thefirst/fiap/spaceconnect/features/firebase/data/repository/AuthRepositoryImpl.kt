@@ -1,10 +1,10 @@
-package br.com.thefirst.fiap.spaceconnect.data.repository
+package br.com.thefirst.fiap.spaceconnect.features.firebase.data.repository
 
-import br.com.thefirst.fiap.spaceconnect.data.model.toDomain
-import br.com.thefirst.fiap.spaceconnect.data.remote.FirebaseAuthDataSource
-import br.com.thefirst.fiap.spaceconnect.domain.common.Resource
-import br.com.thefirst.fiap.spaceconnect.domain.model.User
-import br.com.thefirst.fiap.spaceconnect.domain.repository.AuthRepository
+import br.com.thefirst.fiap.spaceconnect.features.firebase.data.model.toDomain
+import br.com.thefirst.fiap.spaceconnect.features.firebase.data.remote.FirebaseAuthDataSource
+import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.common.Resource
+import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.model.User
+import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.repository.AuthRepository
 
 class AuthRepositoryImpl(
     private val dataSource: FirebaseAuthDataSource

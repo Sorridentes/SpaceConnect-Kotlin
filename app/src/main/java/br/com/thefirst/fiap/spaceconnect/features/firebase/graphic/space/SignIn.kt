@@ -1,4 +1,4 @@
-package br.com.thefirst.fiap.spaceconnect.presentation.space.auth
+package br.com.thefirst.fiap.spaceconnect.features.firebase.graphic.space
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -29,14 +29,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.thefirst.fiap.spaceconnect.R
-import br.com.thefirst.fiap.spaceconnect.presentation.common.Logo
 
 @Composable
-fun SignIn(onSignIn: (email: String, password: String) -> Unit, enabled: Boolean) {
+fun SignIn(
+    onSignIn: (email: String, password: String) -> Unit,
+    onCreateAccount: () -> Unit,
+) {
 
     var emailInput by remember { mutableStateOf("") }
     var passwordInput by remember { mutableStateOf("") }
@@ -93,6 +96,7 @@ fun SignIn(onSignIn: (email: String, password: String) -> Unit, enabled: Boolean
                         contentDescription = null
                     )
                 },
+                visualTransformation = PasswordVisualTransformation(),
                 label = { Text("Senha") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -106,7 +110,6 @@ fun SignIn(onSignIn: (email: String, password: String) -> Unit, enabled: Boolean
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF0B3D91)
                 ),
-                enabled = enabled
             ) {
                 Text("Entrar", color = Color.White)
             }
@@ -120,12 +123,15 @@ fun SignIn(onSignIn: (email: String, password: String) -> Unit, enabled: Boolean
             ) {
                 Text("Não tem uma conta? ")
                 TextButton(
-                    onClick = {}
+                    onClick = onCreateAccount,
+                    modifier = Modifier.padding(0.dp)
+
                 ) {
                     Text(
                         text = "Cadastre-se",
                         color = Color(0xFF0D47A1),
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 17.sp
                     )
                 }
             }

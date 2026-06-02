@@ -1,10 +1,10 @@
-package br.com.thefirst.fiap.spaceconnect.di
+package br.com.thefirst.fiap.spaceconnect.features.firebase.di
 
 
 import br.com.thefirst.fiap.spaceconnect.presentation.space.auth.AuthenticationViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
-val presentation = module {
+val graphicModule = module {
     viewModelOf(::AuthenticationViewModel)
 }

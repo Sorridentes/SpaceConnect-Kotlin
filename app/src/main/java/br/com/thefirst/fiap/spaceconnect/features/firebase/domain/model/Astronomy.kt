@@ -1,4 +1,4 @@
-package br.com.thefirst.fiap.spaceconnect.domain.model
+package br.com.thefirst.fiap.spaceconnect.features.firebase.domain.model
 
 class Astronomy (
     val date: String,

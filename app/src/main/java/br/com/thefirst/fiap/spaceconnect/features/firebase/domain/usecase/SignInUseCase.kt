@@ -1,8 +1,8 @@
-package br.com.thefirst.fiap.spaceconnect.domain.usecase
+package br.com.thefirst.fiap.spaceconnect.features.firebase.domain.usecase
 
-import br.com.thefirst.fiap.spaceconnect.domain.common.Resource
-import br.com.thefirst.fiap.spaceconnect.domain.model.User
-import br.com.thefirst.fiap.spaceconnect.domain.repository.AuthRepository
+import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.common.Resource
+import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.model.User
+import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.repository.AuthRepository
 
 class SignInUseCase (
     private val repository: AuthRepository

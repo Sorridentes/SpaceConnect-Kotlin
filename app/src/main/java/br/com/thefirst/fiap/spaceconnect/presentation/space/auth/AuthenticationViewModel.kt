@@ -2,11 +2,11 @@ package br.com.thefirst.fiap.spaceconnect.presentation.space.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.thefirst.fiap.spaceconnect.domain.common.Resource
-import br.com.thefirst.fiap.spaceconnect.domain.model.User
-import br.com.thefirst.fiap.spaceconnect.domain.usecase.CreateUserUseCase
-import br.com.thefirst.fiap.spaceconnect.domain.usecase.SignInUseCase
-import br.com.thefirst.fiap.spaceconnect.domain.usecase.SignOutUseCase
+import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.common.Resource
+import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.model.User
+import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.usecase.CreateUserUseCase
+import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.usecase.SignInUseCase
+import br.com.thefirst.fiap.spaceconnect.features.firebase.domain.usecase.SignOutUseCase
 import br.com.thefirst.fiap.spaceconnect.presentation.common.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -80,6 +80,7 @@ class AuthenticationViewModel(
             when (val result = signOutUseCase()) {
                 is Resource.Success -> {
                     _signOutState.value = UiState.Success(result.data)
+                    _currentUser.value = null
                 }
 
                 is Resource.Error -> {

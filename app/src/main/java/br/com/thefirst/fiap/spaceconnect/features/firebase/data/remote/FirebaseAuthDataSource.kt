@@ -1,4 +1,4 @@
-package br.com.thefirst.fiap.spaceconnect.data.remote
+package br.com.thefirst.fiap.spaceconnect.features.firebase.data.remote
 
 import com.google.firebase.auth.FirebaseUser
 
