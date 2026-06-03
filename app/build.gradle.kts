@@ -78,4 +78,6 @@ dependencies {
     implementation(libs.firebase.auth)
 
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
+
+    implementation("androidx.compose.material:material-icons-extended:1.5.0")
 }
