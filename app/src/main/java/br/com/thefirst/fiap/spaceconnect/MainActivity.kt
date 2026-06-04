@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import br.com.thefirst.fiap.spaceconnect.presentation.navigation.AppNavigation
+import br.com.thefirst.fiap.spaceconnect.navigation.AppNavigation
 import br.com.thefirst.fiap.spaceconnect.ui.theme.SpaceConnectTheme
 
 class MainActivity : ComponentActivity() {

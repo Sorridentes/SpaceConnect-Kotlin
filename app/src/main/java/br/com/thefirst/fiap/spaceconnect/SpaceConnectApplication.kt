@@ -1,7 +1,8 @@
 package br.com.thefirst.fiap.spaceconnect
 
 import android.app.Application
-import br.com.thefirst.fiap.spaceconnect.features.firebase.di.firebaseModuleInclude
+import br.com.thefirst.fiap.spaceconnect.features.auth.di.authModuleInclude
+import br.com.thefirst.fiap.spaceconnect.features.nasa.di.nasaModuleInclude
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -14,7 +15,8 @@ class SpaceConnectApplication : Application() {
             androidLogger(Level.ERROR)
             androidContext(this@SpaceConnectApplication)
             modules(
-                firebaseModuleInclude,
+                authModuleInclude,
+                nasaModuleInclude
             )
         }
     }
