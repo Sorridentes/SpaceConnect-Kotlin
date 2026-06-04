@@ -1,18 +1,28 @@
 package br.com.thefirst.fiap.spaceconnect
 
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.list.TestNasaScreen
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import br.com.thefirst.fiap.spaceconnect.features.auth.domain.model.User
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    userName: String,
-    onSearchClick: (startDate: String, endDate: String) -> Unit,
+    user: User?,
     onSignOut: () -> Unit
 ) {
-    TestNasaScreen(
-        onSearchClick = { startDate, endDate -> onSearchClick(startDate, endDate) },
-        onSingOut = onSignOut
-    )
+    Column(modifier = Modifier.padding(16.dp)) {
+        Text("Bem-vindo, ${user?.name ?: "Usuário"}!")
+        Text("Email: ${user?.email ?: ""}")
+
+        Button(
+            onClick = onSignOut,
+            modifier = Modifier.padding(top = 16.dp)
+        ) {
+            Text("Sair")
+        }
+    }
 }

@@ -52,7 +52,10 @@ class FirebaseAuthDataSourceImpl(
     }
 
     override suspend fun signOut() {
-        auth.signOut()
+        return suspendCancellableCoroutine { continuation ->
+            auth.signOut()
+            continuation.resume(Unit)
+        }
     }
 
     override fun getCurrentUser(): FirebaseUser? {
