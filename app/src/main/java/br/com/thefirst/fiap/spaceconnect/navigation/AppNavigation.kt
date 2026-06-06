@@ -54,8 +54,14 @@ fun AppNavigation() {
             )
         }
         composable(AppRoutes.HOME) {
-            HomeScreen(
+            AstronomyListScreen(
                 user = currentUser,
+                onNavigateToDetail = { astronomy ->
+//                    navController.navigate(AppRoutes.DETAIL)
+                },
+                onNavigateToFavorites = {
+//                    navController.navigate(AppRoutes.FAVORITES)
+                },
                 onSignOut = {
                     authViewModel.signOut()
                     navController.navigate(AppRoutes.AUTH) {

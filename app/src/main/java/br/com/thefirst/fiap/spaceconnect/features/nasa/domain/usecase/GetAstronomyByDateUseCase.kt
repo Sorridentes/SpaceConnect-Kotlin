@@ -6,10 +6,14 @@ import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.repository.Astrono
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class GetAstronomyByDateUseCase (
+class GetAstronomyByDateUseCase(
     private val repository: AstronomyRepository
-){
-    suspend operator fun invoke(startDate: String, endDate: String): Resource<List<Astronomy>>  {
+) {
+    suspend operator fun invoke(
+        startDate: String,
+        endDate: String,
+        forceRefresh: Boolean = false
+    ): Resource<List<Astronomy>> {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US).apply { isLenient = false }
 
         if (startDate.isEmpty() || endDate.isEmpty()) {
@@ -27,7 +31,7 @@ class GetAstronomyByDateUseCase (
             return Resource.Error("Data de início deve ser anterior à data de fim.")
         }
 
-        return repository.getAstronomyByDate(startDate, endDate)
+        return repository.getAstronomyByDate(startDate, endDate, forceRefresh)
 
     }
 }
