@@ -52,8 +52,13 @@ class AstronomyRepositoryImpl(
         val oldestCachedDate = dates.firstOrNull() ?: return false
         val newestCachedDate = dates.lastOrNull() ?: return false
 
-        // Verifica se o cache cobre completamente o período solicitado
         return oldestCachedDate <= startDate && newestCachedDate >= endDate
+    }
+
+    private suspend fun updateFavoriteStatus(list: List<Astronomy>): List<Astronomy> {
+        return list.map { astronomy ->
+            astronomy.copy(favorite = localDataSource.isFavorite(astronomy.date))
+        }
     }
 
     override fun getCachedFromDB(): Flow<List<Astronomy>> {
@@ -64,7 +69,8 @@ class AstronomyRepositoryImpl(
         return try {
             val entity = localDataSource.getAstronomyByDate(date)
             if (entity != null) {
-                Resource.Success(entity.toDomain())
+                val isFav = localDataSource.isFavorite(date)
+                Resource.Success(entity.toDomain().copy(favorite = isFav))
             } else {
                 Resource.Error("Astronomia não encontrada para a data: $date")
             }
@@ -74,13 +80,14 @@ class AstronomyRepositoryImpl(
     }
 
     override fun getFavoriteAstronomyList(): Flow<List<Astronomy>> {
-        return localDataSource.getCacheFromDB()
-            .let { flow ->
-                flow.map { list -> list.filter { it.favorite } }
-            }
+        return localDataSource.getFavoriteAstronomyList()
     }
 
     override suspend fun toggleFavorite(astronomy: Astronomy) {
-        localDataSource.toggleFavorite(astronomy.date, !astronomy.favorite)
+        if (astronomy.favorite) {
+            localDataSource.removeFavorite(astronomy.date)
+        } else {
+            localDataSource.addFavorite(astronomy)
+        }
     }
 }

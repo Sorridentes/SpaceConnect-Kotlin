@@ -23,7 +23,7 @@ class AstronomyListViewModel(
     val getAstronomyByDateState: StateFlow<UiState<List<Astronomy>>> = _getAstronomyByDateState.asStateFlow()
 
     private val _astronomyList = MutableStateFlow<List<Astronomy>>(emptyList())
-    val astronomyList: StateFlow<List<Astronomy>> =_astronomyList.asStateFlow()
+    val astronomyList: StateFlow<List<Astronomy>> = _astronomyList.asStateFlow()
 
     private val _favoriteAstronomy = MutableStateFlow<List<Astronomy>>(emptyList())
     val favoriteAstronomy: StateFlow<List<Astronomy>> = _favoriteAstronomy.asStateFlow()
@@ -38,17 +38,33 @@ class AstronomyListViewModel(
         repository.getFavoriteAstronomyList()
             .onEach { favoriteList ->
                 _favoriteAstronomy.value = favoriteList
+                updateFavoriteStatusInMainList()
             }
             .launchIn(viewModelScope)
     }
 
-    fun getAstronomyByDate(startDate: String, endDate: String, forceRefresh: Boolean) {
+    private fun updateFavoriteStatusInMainList() {
+        val currentList = _astronomyList.value
+        val favoriteDates = _favoriteAstronomy.value.map { it.date }.toSet()
+
+        val updatedList = currentList.map { astronomy ->
+            if (favoriteDates.contains(astronomy.date)) {
+                astronomy.copy(favorite = true)
+            } else {
+                astronomy.copy(favorite = false)
+            }
+        }
+        _astronomyList.value = updatedList
+    }
+
+    fun getAstronomyByDate(startDate: String, endDate: String, forceRefresh: Boolean = false) {
         viewModelScope.launch {
             _getAstronomyByDateState.value = UiState.Loading
 
             when (val result = getAstronomyListByDateUseCase(startDate, endDate, forceRefresh)) {
                 is Resource.Success -> {
                     _getAstronomyByDateState.value = UiState.Success(result.data)
+                    updateFavoriteStatusInMainList()
                 }
                 is Resource.Error -> {
                     _getAstronomyByDateState.value = UiState.Error(result.message)

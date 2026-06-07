@@ -28,6 +28,7 @@ import br.com.thefirst.fiap.spaceconnect.TestNasaViewModel
 import br.com.thefirst.fiap.spaceconnect.features.auth.domain.model.User
 import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.model.Astronomy
 import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.detail.AstronomyDetailScreen
+import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.favorite.AstronomyFavoritesScreen
 import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.list.AstronomyListScreen
 import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.list.AstronomyListViewModel
 import kotlinx.serialization.json.Json
@@ -61,9 +62,7 @@ fun AppNavigation() {
         composable(AppRoutes.HOME) {
             AstronomyListScreen(
                 onNavigateToDetail = { navController.navigate(AppRoutes.astronomyDetail(it)) },
-                onNavigateToFavorites = {
-//                    navController.navigate(AppRoutes.FAVORITES)
-                },
+                onNavigateToFavorites = { navController.navigate(AppRoutes.FAVORITES) },
                 onSignOut = {
                     authViewModel.signOut()
                     navController.navigate(AppRoutes.AUTH) {
@@ -84,6 +83,21 @@ fun AppNavigation() {
             AstronomyDetailScreen(
                 date = date,
                 onBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(AppRoutes.FAVORITES) {
+            AstronomyFavoritesScreen(
+                onNavigateToDetail = { navController.navigate(AppRoutes.astronomyDetail(it)) },
+                onNavigateToList = { navController.navigate(AppRoutes.HOME) },
+                onSignOut = {
+                    authViewModel.signOut()
+                    navController.navigate(AppRoutes.AUTH) {
+                        popUpTo(AppRoutes.HOME) {
+                            inclusive = true
+                        }
+                    }
+                }
             )
         }
     }

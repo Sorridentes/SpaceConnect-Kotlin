@@ -6,10 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import br.com.thefirst.fiap.spaceconnect.features.nasa.data.local.dao.AstronomyDao
 import br.com.thefirst.fiap.spaceconnect.features.nasa.data.model.AstronomyEntity
+import br.com.thefirst.fiap.spaceconnect.features.nasa.data.model.AstronomyFavoriteEntity
 
 @Database(
-    entities = [AstronomyEntity::class],
-    version = 1,
+    entities = [AstronomyEntity::class, AstronomyFavoriteEntity::class],
+    version = 2,  // Incrementar versão
     exportSchema = false
 )
 abstract class NasaDatabase : RoomDatabase() {

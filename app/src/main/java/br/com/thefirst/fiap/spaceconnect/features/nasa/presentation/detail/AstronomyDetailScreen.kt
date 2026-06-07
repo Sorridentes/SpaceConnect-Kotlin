@@ -3,11 +3,14 @@ package br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.detail
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -15,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
+import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -37,6 +41,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import br.com.thefirst.fiap.spaceconnect.common.UiState
 import coil3.compose.AsyncImage
 import org.koin.androidx.compose.koinViewModel
@@ -142,19 +147,39 @@ fun AstronomyDetailScreen(
                     Column(
                         modifier = Modifier.padding(16.dp)
                     ) {
+
+                        Row(
+                            modifier = Modifier
+                                .background(
+                                    color = Color(0xFFF2F2F2),
+                                    shape = RoundedCornerShape(16.dp)
+                                )
+                                .padding(horizontal = 12.dp, vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.DateRange,
+                                contentDescription = "Data",
+                                tint = Color(0xFF5A5A5A),
+                                modifier = Modifier.size(16.dp)
+                            )
+
+                            Spacer(modifier = Modifier.width(6.dp))
+
+                            Text(
+                                text = dateFormatted,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Medium,
+                                color = Color(0xFF5A5A5A)
+                            )
+                        }
+                        Spacer(Modifier.height(8.dp))
+
                         Text(
                             text = astronomy.title,
                             style = MaterialTheme.typography.titleLarge,
                             color = Color(0xFF0B3D91),
                             fontWeight = FontWeight.Bold
-                        )
-
-                        Spacer(Modifier.height(8.dp))
-
-                        Text(
-                            text = dateFormatted,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = Color.Gray
                         )
 
                         Spacer(Modifier.height(16.dp))

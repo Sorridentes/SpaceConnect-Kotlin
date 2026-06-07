@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material.icons.filled.StarBorder
@@ -53,8 +54,8 @@ fun AstronomyListScreen(
     val astronomyList by viewModel.astronomyList.collectAsState()
 
     var selectedTab by remember { mutableIntStateOf(0) }
-    var startDate by remember { mutableStateOf("2025-01-01") }
-    var endDate by remember { mutableStateOf("2025-01-10") }
+    var startDate by remember { mutableStateOf("2025-02-01") }
+    var endDate by remember { mutableStateOf("2025-02-10") }
 
     LaunchedEffect(Unit) {
         if (astronomyList.isEmpty()) {
@@ -101,7 +102,7 @@ fun AstronomyListScreen(
                     selected = selectedTab == 0,
                     onClick = { selectedTab = 0 },
                     icon = {
-                        Icon(Icons.Default.PhotoLibrary, null)
+                        Icon(Icons.Default.Bookmark, null)
                     },
                     label = { Text("Galeria") }
                 )

@@ -8,7 +8,7 @@ interface AstronomyRepository {
     suspend fun getAstronomyListByStartDateAndEndDate(
         startDate: String,
         endDate: String,
-        forceRefresh: Boolean
+        forceRefresh: Boolean = false
     ): Resource<List<Astronomy>>
 
     fun getCachedFromDB(): Flow<List<Astronomy>>
@@ -18,5 +18,4 @@ interface AstronomyRepository {
     fun getFavoriteAstronomyList(): Flow<List<Astronomy>>
 
     suspend fun toggleFavorite(astronomy: Astronomy)
-
 }
