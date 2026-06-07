@@ -7,6 +7,6 @@ val nasaModuleInclude = module {
         networkModule,
         dataModule,
         domainModule,
-        graphicModule
+        presentationModule
     )
 }

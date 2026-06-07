@@ -5,10 +5,10 @@ import br.com.thefirst.fiap.spaceconnect.features.nasa.data.model.AstronomyRespo
 class AstronomyRemoteDataSourceImpl(
     private val api: AstronomyApi
 ): AstronomyRemoteDataSource {
-    override suspend fun getAstronomyByDate(
+    override suspend fun getAstronomyListByDate(
         startDate: String,
         endDate: String
     ): List<AstronomyResponse> {
-        return api.getAstronomyByDate(startDate = startDate, endDate = endDate)
+        return api.getAstronomyListByDate(startDate = startDate, endDate = endDate)
     }
 }

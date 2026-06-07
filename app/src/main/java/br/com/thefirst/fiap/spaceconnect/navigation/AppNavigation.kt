@@ -15,17 +15,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import br.com.thefirst.fiap.spaceconnect.common.UiState
 import br.com.thefirst.fiap.spaceconnect.features.auth.presentation.auth.AuthenticationScreen
 import br.com.thefirst.fiap.spaceconnect.features.auth.presentation.auth.AuthenticationViewModel
 import br.com.thefirst.fiap.spaceconnect.HomeScreen
 import br.com.thefirst.fiap.spaceconnect.TestNasaViewModel
 import br.com.thefirst.fiap.spaceconnect.features.auth.domain.model.User
+import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.model.Astronomy
+import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.detail.AstronomyDetailScreen
 import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.list.AstronomyListScreen
 import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.list.AstronomyListViewModel
+import kotlinx.serialization.json.Json
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -44,7 +49,7 @@ fun AppNavigation() {
     ) {
         composable(AppRoutes.AUTH) {
             AuthenticationScreen(
-                onNavigateToHome = { user ->
+                onNavigateToHome = {
                     navController.navigate(AppRoutes.HOME) {
                         popUpTo(AppRoutes.AUTH) {
                             inclusive = true
@@ -55,10 +60,7 @@ fun AppNavigation() {
         }
         composable(AppRoutes.HOME) {
             AstronomyListScreen(
-                user = currentUser,
-                onNavigateToDetail = { astronomy ->
-//                    navController.navigate(AppRoutes.DETAIL)
-                },
+                onNavigateToDetail = { navController.navigate(AppRoutes.astronomyDetail(it)) },
                 onNavigateToFavorites = {
 //                    navController.navigate(AppRoutes.FAVORITES)
                 },
@@ -71,9 +73,18 @@ fun AppNavigation() {
                     }
                 }
             )
+        }
 
+        composable(
+            route = AppRoutes.DETAIL,
+            arguments = listOf(navArgument("date") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val date = backStackEntry.arguments?.getString("date") ?: ""
+
+            AstronomyDetailScreen(
+                date = date,
+                onBack = { navController.popBackStack() }
+            )
         }
     }
 }
-
-

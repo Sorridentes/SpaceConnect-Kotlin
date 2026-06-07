@@ -6,7 +6,7 @@ import br.com.thefirst.fiap.spaceconnect.common.Resource
 import br.com.thefirst.fiap.spaceconnect.common.UiState
 import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.model.Astronomy
 import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.repository.AstronomyRepository
-import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.usecase.GetAstronomyByDateUseCase
+import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.usecase.GetAstronomyListByDateUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class AstronomyListViewModel(
-    private val getAstronomyByDateUseCase: GetAstronomyByDateUseCase,
+    private val getAstronomyListByDateUseCase: GetAstronomyListByDateUseCase,
     private val repository: AstronomyRepository
 ) : ViewModel() {
 
@@ -29,24 +29,24 @@ class AstronomyListViewModel(
     val favoriteAstronomy: StateFlow<List<Astronomy>> = _favoriteAstronomy.asStateFlow()
 
     init {
-        repository.getCachedAstronomy()
+        repository.getCachedFromDB()
             .onEach { cachedList ->
                 _astronomyList.value = cachedList
             }
             .launchIn(viewModelScope)
 
-        repository.getFavoriteAstronomy()
+        repository.getFavoriteAstronomyList()
             .onEach { favoriteList ->
                 _favoriteAstronomy.value = favoriteList
             }
             .launchIn(viewModelScope)
     }
 
-    fun getAstronomyByDate(startDate: String, endDate: String, forceRefresh: Boolean = false) {
+    fun getAstronomyByDate(startDate: String, endDate: String, forceRefresh: Boolean) {
         viewModelScope.launch {
             _getAstronomyByDateState.value = UiState.Loading
 
-            when (val result = getAstronomyByDateUseCase(startDate, endDate, forceRefresh)) {
+            when (val result = getAstronomyListByDateUseCase(startDate, endDate, forceRefresh)) {
                 is Resource.Success -> {
                     _getAstronomyByDateState.value = UiState.Success(result.data)
                 }

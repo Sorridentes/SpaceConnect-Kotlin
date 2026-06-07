@@ -13,7 +13,7 @@ import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.model.Astronomy
 @Composable
 fun AstronomyListContent(
     astronomyList: List<Astronomy>,
-    onNavigateToDetail: (Astronomy) -> Unit,
+    onNavigateToDetail: (String) -> Unit,
     onFavorite: (Astronomy) -> Unit,
 ) {
     LazyColumn(

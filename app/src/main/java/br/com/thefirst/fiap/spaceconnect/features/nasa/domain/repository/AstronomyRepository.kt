@@ -5,15 +5,18 @@ import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.model.Astronomy
 import kotlinx.coroutines.flow.Flow
 
 interface AstronomyRepository {
-    suspend fun getAstronomyByDate(
+    suspend fun getAstronomyListByStartDateAndEndDate(
         startDate: String,
         endDate: String,
-        forceRefresh: Boolean = false
+        forceRefresh: Boolean
     ): Resource<List<Astronomy>>
 
-    fun getCachedAstronomy(): Flow<List<Astronomy>>
+    fun getCachedFromDB(): Flow<List<Astronomy>>
 
-    fun getFavoriteAstronomy(): Flow<List<Astronomy>>
+    suspend fun getAstronomyByDate(date: String): Resource<Astronomy>
+
+    fun getFavoriteAstronomyList(): Flow<List<Astronomy>>
 
     suspend fun toggleFavorite(astronomy: Astronomy)
+
 }

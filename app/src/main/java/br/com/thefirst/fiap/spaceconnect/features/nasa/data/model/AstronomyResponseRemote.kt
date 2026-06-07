@@ -15,7 +15,6 @@ data class AstronomyResponse(
 )
 
 fun AstronomyResponse.toDomain(): Astronomy {
-    val date = this.formatDate()
     return Astronomy(
         date = date,
         description = explanation,
@@ -24,14 +23,11 @@ fun AstronomyResponse.toDomain(): Astronomy {
     )
 }
 
-fun AstronomyResponse.formatDate(): String {
-    try {
-        val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val outputFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
-
-        val date = LocalDate.parse(this.date, inputFormatter)
-        return date.format(outputFormatter).uppercase()
-    } catch (e: Exception) {
-        return this.date
-    }
+fun AstronomyResponse.toEntity(): AstronomyEntity {
+    return AstronomyEntity(
+        date = this.date,
+        description = this.explanation,
+        title = this.title,
+        image = this.url
+    )
 }

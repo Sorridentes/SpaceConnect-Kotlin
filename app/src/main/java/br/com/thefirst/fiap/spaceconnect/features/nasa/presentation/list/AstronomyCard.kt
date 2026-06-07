@@ -31,20 +31,33 @@ import androidx.compose.ui.unit.dp
 import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.model.Astronomy
 import br.com.thefirst.fiap.spaceconnect.ui.theme.SpaceConnectTheme
 import coil3.compose.AsyncImage
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @Composable
 fun AstronomyCard(
     astronomy: Astronomy,
-    onNavigateToDetail: (astro: Astronomy) -> Unit,
+    onNavigateToDetail: (String) -> Unit,
     onFavorite: (astronomy: Astronomy) -> Unit
 ) {
+    var dateFormatted = ""
+    try {
+        val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val outputFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
+
+        dateFormatted = LocalDate.parse(astronomy.date, inputFormatter).format(outputFormatter).uppercase()
+
+    } catch (e: Exception) {
+        dateFormatted = astronomy.date
+    }
 
     ElevatedCard(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
             .border(width = 1.dp, Color(0xFFAAAAAA), CardDefaults.elevatedShape),
-        onClick = { onNavigateToDetail(astronomy) },
+        onClick = {onNavigateToDetail(astronomy.date) },
         colors = CardDefaults.elevatedCardColors(containerColor = Color.White),
     ) {
 
@@ -67,7 +80,7 @@ fun AstronomyCard(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = astronomy.date,
+                        text = dateFormatted,
                         style = MaterialTheme.typography.labelSmall,
                         color = Color(0xFF0B3D91),
                         fontWeight = FontWeight.Medium
@@ -102,7 +115,7 @@ fun AstronomyCard(
 private fun AstronomyCardPreview() {
     SpaceConnectTheme {
         AstronomyCard(
-            onNavigateToDetail = { _ -> },
+            onNavigateToDetail = {},
             astronomy = Astronomy(
                 "01 JAN 2025",
                 "The closest star system to the Sun is the Alpha Centauri system. Of the three stars in the system, the dimmest -- called Proxima Centauri -- is actually the nearest star. The bright stars Alpha Centauri A and B form a close binary as they are separated by only 23 times the Earth- Sun distance - slightly greater than the distance between Uranus and the Sun. The Alphasystem is not visible in much of the northern hemisphere. Alpha Centauri A, also known as Rigil Kentaurus, is the brightest star in the constellation of Centaurus and is the fourth brightest star in the night sky. Sirius is the brightest even though it is more than twice as far away. By an exciting coincidence, Alpha Centauri A is the same type of star as our Sun, and Proxima Centauri is now known to have a potentially habitable exoplanet.",

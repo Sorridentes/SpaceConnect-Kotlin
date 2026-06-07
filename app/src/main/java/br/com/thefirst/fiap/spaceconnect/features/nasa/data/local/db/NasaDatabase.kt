@@ -1,10 +1,10 @@
-package br.com.thefirst.fiap.spaceconnect.features.nasa.data.local
+package br.com.thefirst.fiap.spaceconnect.features.nasa.data.local.db
 
+import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
-import android.content.Context
 import androidx.room.RoomDatabase
-import br.com.thefirst.fiap.spaceconnect.features.nasa.data.dao.AstronomyDao
+import br.com.thefirst.fiap.spaceconnect.features.nasa.data.local.dao.AstronomyDao
 import br.com.thefirst.fiap.spaceconnect.features.nasa.data.model.AstronomyEntity
 
 @Database(

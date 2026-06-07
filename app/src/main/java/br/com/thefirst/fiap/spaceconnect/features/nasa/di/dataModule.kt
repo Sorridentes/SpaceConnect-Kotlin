@@ -1,8 +1,8 @@
-// features/nasa/di/dataModule.kt
 package br.com.thefirst.fiap.spaceconnect.features.nasa.di
 
 import br.com.thefirst.fiap.spaceconnect.features.nasa.data.local.AstronomyLocalDataSource
-import br.com.thefirst.fiap.spaceconnect.features.nasa.data.local.NasaDatabase
+import br.com.thefirst.fiap.spaceconnect.features.nasa.data.local.AstronomyLocalDataSourceImpl
+import br.com.thefirst.fiap.spaceconnect.features.nasa.data.local.db.NasaDatabase
 import br.com.thefirst.fiap.spaceconnect.features.nasa.data.remote.AstronomyRemoteDataSource
 import br.com.thefirst.fiap.spaceconnect.features.nasa.data.remote.AstronomyRemoteDataSourceImpl
 import br.com.thefirst.fiap.spaceconnect.features.nasa.data.repository.AstronomyRepositoryImpl
@@ -23,8 +23,8 @@ val dataModule = module {
         get<NasaDatabase>().astronomyDao()
     }
 
-    single {
-        AstronomyLocalDataSource(dao = get())
+    single<AstronomyLocalDataSource> {
+        AstronomyLocalDataSourceImpl(dao = get())
     }
 
     single<AstronomyRepository> {

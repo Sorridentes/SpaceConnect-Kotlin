@@ -20,6 +20,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -30,6 +31,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.thefirst.fiap.spaceconnect.common.UiState
@@ -41,9 +44,8 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AstronomyListScreen(
-    user: User?,
     viewModel: AstronomyListViewModel = koinViewModel(),
-    onNavigateToDetail: (Astronomy) -> Unit,
+    onNavigateToDetail: (String) -> Unit,
     onNavigateToFavorites: () -> Unit,
     onSignOut: () -> Unit,
 ) {
@@ -56,7 +58,7 @@ fun AstronomyListScreen(
 
     LaunchedEffect(Unit) {
         if (astronomyList.isEmpty()) {
-            viewModel.getAstronomyByDate(startDate, endDate)
+            viewModel.getAstronomyByDate(startDate, endDate, true)
         }
     }
 
@@ -66,7 +68,8 @@ fun AstronomyListScreen(
                 title = {
                     Text(
                         "APOD 2025",
-                        style = MaterialTheme.typography.titleLarge
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
                     )
                 },
                 actions = {
@@ -83,7 +86,13 @@ fun AstronomyListScreen(
                             contentDescription = "Sair"
                         )
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.White,
+                    titleContentColor = Color(0xFF0B3D91),
+                    navigationIconContentColor = Color(0xFF0B3D91),
+                    actionIconContentColor = Color(0xFF0B3D91)
+                )
             )
         },
         bottomBar = {
@@ -122,7 +131,7 @@ fun AstronomyListScreen(
                 is UiState.Success -> {
                     AstronomyListContent(
                         astronomyList = astronomyList,
-                        onNavigateToDetail = onNavigateToDetail,
+                        onNavigateToDetail = { onNavigateToDetail(it) },
                         onFavorite = { viewModel.toggleFavorite(it) }
                     )
                 }

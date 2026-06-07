@@ -4,14 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.thefirst.fiap.spaceconnect.common.Resource
 import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.model.Astronomy
-import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.usecase.GetAstronomyByDateUseCase
+import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.usecase.GetAstronomyListByDateUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class TestNasaViewModel(
-    private val getAstronomyUseCase: GetAstronomyByDateUseCase
+    private val getAstronomyUseCase: GetAstronomyListByDateUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(NasaUiState())
@@ -21,7 +21,7 @@ class TestNasaViewModel(
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true, error = null)
 
-            val result = getAstronomyUseCase(startDate, endDate)
+            val result = getAstronomyUseCase(startDate, endDate, false)
 
             when (result) {
                 is Resource.Success -> {
