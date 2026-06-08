@@ -26,7 +26,7 @@ class AstronomyDetailViewModel(
     fun loadAstronomy(date: String) {
         viewModelScope.launch {
             _astronomyState.value = UiState.Loading
-            when (val result = getAstronomyByDateUseCase.invoke(date)) {
+            when (val result = getAstronomyByDateUseCase(date)) {
                 is Resource.Success -> {
                     _astronomyState.value = UiState.Success(result.data)
                 }

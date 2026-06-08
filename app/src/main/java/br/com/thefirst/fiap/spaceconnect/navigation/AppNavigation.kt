@@ -1,74 +1,78 @@
+// AppNavigation.kt
 package br.com.thefirst.fiap.spaceconnect.navigation
 
-import android.widget.Toast
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import br.com.thefirst.fiap.spaceconnect.common.UiState
 import br.com.thefirst.fiap.spaceconnect.features.auth.presentation.auth.AuthenticationScreen
-import br.com.thefirst.fiap.spaceconnect.features.auth.presentation.auth.AuthenticationViewModel
-import br.com.thefirst.fiap.spaceconnect.HomeScreen
-import br.com.thefirst.fiap.spaceconnect.TestNasaViewModel
-import br.com.thefirst.fiap.spaceconnect.features.auth.domain.model.User
-import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.model.Astronomy
 import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.detail.AstronomyDetailScreen
 import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.favorite.AstronomyFavoritesScreen
 import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.list.AstronomyListScreen
-import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.list.AstronomyListViewModel
-import kotlinx.serialization.json.Json
-import org.koin.androidx.compose.koinViewModel
+import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.onboarding.AstronomyOnboardingScreen
+import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.splash.AstronomySplashScreen
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    val authViewModel: AuthenticationViewModel = koinViewModel()
-
-    val currentUser by authViewModel.currentUserState.collectAsState()
-
-    val startDestination = if (currentUser != null) AppRoutes.HOME else AppRoutes.AUTH
-
 
     NavHost(
         navController = navController,
-        startDestination = startDestination
+        startDestination = AppRoutes.SPLASH
     ) {
-        composable(AppRoutes.AUTH) {
-            AuthenticationScreen(
+        composable(AppRoutes.SPLASH) {
+            AstronomySplashScreen(
+                onNavigateToOnboarding = {
+                    navController.navigate(AppRoutes.ONBOARDING) {
+                        popUpTo(AppRoutes.SPLASH) { inclusive = true }
+                    }
+                },
+                onNavigateToAuth = {
+                    navController.navigate(AppRoutes.AUTH) {
+                        popUpTo(AppRoutes.SPLASH) { inclusive = true }
+                    }
+                },
                 onNavigateToHome = {
                     navController.navigate(AppRoutes.HOME) {
-                        popUpTo(AppRoutes.AUTH) {
-                            inclusive = true
-                        }
+                        popUpTo(AppRoutes.SPLASH) { inclusive = true }
                     }
                 }
             )
         }
+
+        composable(AppRoutes.ONBOARDING) {
+            AstronomyOnboardingScreen(
+                onNavigateToAuth = {
+                    navController.navigate(AppRoutes.AUTH) {
+                        popUpTo(AppRoutes.ONBOARDING) { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(AppRoutes.AUTH) {
+            AuthenticationScreen(
+                onNavigateToHome = { user ->
+                    navController.navigate(AppRoutes.HOME) {
+                        popUpTo(AppRoutes.AUTH) { inclusive = true }
+                    }
+                }
+            )
+        }
+
         composable(AppRoutes.HOME) {
             AstronomyListScreen(
-                onNavigateToDetail = { navController.navigate(AppRoutes.astronomyDetail(it)) },
-                onNavigateToFavorites = { navController.navigate(AppRoutes.FAVORITES) },
+                onNavigateToDetail = { date ->
+                    navController.navigate(AppRoutes.astronomyDetail(date))
+                },
+                onNavigateToFavorites = {
+                    navController.navigate(AppRoutes.FAVORITES)
+                },
                 onSignOut = {
-                    authViewModel.signOut()
                     navController.navigate(AppRoutes.AUTH) {
-                        popUpTo(AppRoutes.HOME) {
-                            inclusive = true
-                        }
+                        popUpTo(AppRoutes.HOME) { inclusive = true }
                     }
                 }
             )
@@ -79,7 +83,6 @@ fun AppNavigation() {
             arguments = listOf(navArgument("date") { type = NavType.StringType })
         ) { backStackEntry ->
             val date = backStackEntry.arguments?.getString("date") ?: ""
-
             AstronomyDetailScreen(
                 date = date,
                 onBack = { navController.popBackStack() }
@@ -88,14 +91,17 @@ fun AppNavigation() {
 
         composable(AppRoutes.FAVORITES) {
             AstronomyFavoritesScreen(
-                onNavigateToDetail = { navController.navigate(AppRoutes.astronomyDetail(it)) },
-                onNavigateToList = { navController.navigate(AppRoutes.HOME) },
+                onNavigateToDetail = { date ->
+                    navController.navigate(AppRoutes.astronomyDetail(date))
+                },
+                onNavigateToList = {
+                    navController.navigate(AppRoutes.HOME) {
+                        popUpTo(AppRoutes.FAVORITES) { inclusive = true }
+                    }
+                },
                 onSignOut = {
-                    authViewModel.signOut()
                     navController.navigate(AppRoutes.AUTH) {
-                        popUpTo(AppRoutes.HOME) {
-                            inclusive = true
-                        }
+                        popUpTo(AppRoutes.HOME) { inclusive = true }
                     }
                 }
             )

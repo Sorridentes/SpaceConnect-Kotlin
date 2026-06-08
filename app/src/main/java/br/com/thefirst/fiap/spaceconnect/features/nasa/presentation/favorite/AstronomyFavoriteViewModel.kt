@@ -31,14 +31,4 @@ class AstronomyFavoritesViewModel(
             repository.toggleFavorite(astronomy)
         }
     }
-
-    fun refreshFavorites() {
-        viewModelScope.launch {
-            repository.getFavoriteAstronomyList()
-                .onEach { favorites ->
-                    _favoritesList.value = favorites
-                }
-                .launchIn(viewModelScope)
-        }
-    }
 }

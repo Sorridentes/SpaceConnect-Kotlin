@@ -1,14 +1,20 @@
 package br.com.thefirst.fiap.spaceconnect.features.auth.presentation.auth
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AppShortcut
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,21 +32,21 @@ fun Logo() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Card(
-            modifier = Modifier.size(100.dp),
-            shape = CircleShape,
-            elevation = CardDefaults.cardElevation(4.dp),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFF0B3D91))
+        Box(
+            modifier = Modifier
+                .border(
+                    width = 1.dp,
+                    color = Color(0x880B3D91),
+                    shape = CircleShape
+                )
+                .padding(20.dp)
         ) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(painter = painterResource(R.drawable.icone),
-                    contentDescription = null,
-                    modifier = Modifier.size(50.dp))
-            }
+            Icon(
+                imageVector = Icons.Default.AppShortcut,
+                contentDescription = null,
+                tint = Color(0xFF0B3D91),
+                modifier = Modifier.size(50.dp)
+            )
         }
         Text(
             "Space Connect", color = Color(0xFF0B3D91),

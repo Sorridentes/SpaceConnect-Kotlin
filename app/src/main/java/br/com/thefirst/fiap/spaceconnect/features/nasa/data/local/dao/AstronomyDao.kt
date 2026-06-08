@@ -22,12 +22,6 @@ interface AstronomyDao {
     @Query("SELECT * FROM astronomy_table WHERE date = :date")
     suspend fun getAstronomyByDate(date: String): AstronomyEntity?
 
-    @Query("DELETE FROM astronomy_table")
-    suspend fun deleteAllAstronomy()
-
-    @Query("DELETE FROM astronomy_table WHERE date = :date")
-    suspend fun deleteAstronomyByDate(date: String)
-
     @Query("SELECT COUNT(*) FROM astronomy_table")
     suspend fun getCount(): Int
 
@@ -54,6 +48,6 @@ interface AstronomyDao {
     @Query("SELECT EXISTS(SELECT 1 FROM favorite_astronomy_table WHERE date = :date)")
     suspend fun isFavorite(date: String): Boolean
 
-    @Query("SELECT COUNT(*) FROM favorite_astronomy_table")
-    suspend fun getFavoritesCount(): Int
+    @Query("SELECT * FROM favorite_astronomy_table WHERE date = :date")
+    suspend fun getFavoriteByDate(date: String): AstronomyFavoriteEntity?
 }

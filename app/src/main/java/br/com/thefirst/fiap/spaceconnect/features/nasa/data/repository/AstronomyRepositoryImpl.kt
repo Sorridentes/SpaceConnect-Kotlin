@@ -7,9 +7,11 @@ import br.com.thefirst.fiap.spaceconnect.features.nasa.data.model.toEntity
 import br.com.thefirst.fiap.spaceconnect.features.nasa.data.remote.AstronomyRemoteDataSource
 import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.model.Astronomy
 import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.repository.AstronomyRepository
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 
 class AstronomyRepositoryImpl(
     private val remoteDataSource: AstronomyRemoteDataSource,
@@ -21,11 +23,14 @@ class AstronomyRepositoryImpl(
         endDate: String,
         forceRefresh: Boolean
     ): Resource<List<Astronomy>> {
+        Log.d("AstronomyRepo", "getAstronomyListByStartDateAndEndDate - startDate: $startDate, endDate: $endDate")
         return try {
             if (!forceRefresh) {
                 val cachedList = localDataSource.getCacheFromDB().firstOrNull()
                 if (!cachedList.isNullOrEmpty() && isCacheValidForDateRange(cachedList, startDate, endDate)) {
-                    return Resource.Success(cachedList)
+
+                    val syncedList = syncWithFavorites(cachedList)
+                    return Resource.Success(syncedList)
                 }
             }
 
@@ -34,17 +39,19 @@ class AstronomyRepositoryImpl(
 
             localDataSource.insertAllAstronomy(response.map { it.toEntity() })
 
-            Resource.Success(astronomyList)
+            val syncedList = syncWithFavorites(astronomyList)
+
+            Resource.Success(syncedList)
 
         } catch (e: Exception) {
             val cachedList = localDataSource.getCacheFromDB().firstOrNull()
             if (!cachedList.isNullOrEmpty()) {
-                return Resource.Success(cachedList)
+                val syncedList = syncWithFavorites(cachedList)
+                return Resource.Success(syncedList)
             }
             Resource.Error(e.message ?: "Erro ao carregar dados")
         }
     }
-
     private fun isCacheValidForDateRange(cachedList: List<Astronomy>, startDate: String, endDate: String): Boolean {
         if (cachedList.isEmpty()) return false
 
@@ -55,25 +62,40 @@ class AstronomyRepositoryImpl(
         return oldestCachedDate <= startDate && newestCachedDate >= endDate
     }
 
-    private suspend fun updateFavoriteStatus(list: List<Astronomy>): List<Astronomy> {
-        return list.map { astronomy ->
-            astronomy.copy(favorite = localDataSource.isFavorite(astronomy.date))
+    private suspend fun syncWithFavorites(astronomyList: List<Astronomy>): List<Astronomy> {
+        if (astronomyList.isEmpty()) return emptyList()
+
+        val favoritesList = localDataSource.getFavoriteAstronomyList().firstOrNull() ?: emptyList()
+        val favoriteDates = favoritesList.map { it.date }.toSet()
+
+        return astronomyList.map { astronomy ->
+            astronomy.copy(favorite = favoriteDates.contains(astronomy.date))
         }
     }
 
     override fun getCachedFromDB(): Flow<List<Astronomy>> {
-        return localDataSource.getCacheFromDB()
+        return localDataSource.getCacheFromDB().map { cachedList ->
+            syncWithFavorites(cachedList)
+        }
     }
 
     override suspend fun getAstronomyByDate(date: String): Resource<Astronomy> {
         return try {
-            val entity = localDataSource.getAstronomyByDate(date)
-            if (entity != null) {
-                val isFav = localDataSource.isFavorite(date)
-                Resource.Success(entity.toDomain().copy(favorite = isFav))
-            } else {
-                Resource.Error("Astronomia não encontrada para a data: $date")
+            val favoriteEntity = localDataSource.getFavoriteByDate(date)
+
+            if (favoriteEntity != null) {
+                return Resource.Success(favoriteEntity.copy(favorite = true))
             }
+
+            val cacheEntity = localDataSource.getAstronomyByDateFromCache(date)
+
+            if (cacheEntity != null) {
+                val isFav = localDataSource.isFavorite(date)
+                return Resource.Success(cacheEntity.toDomain().copy(favorite = isFav))
+            }
+
+            Resource.Error("Astronomia não encontrada para a data: $date")
+
         } catch (e: Exception) {
             Resource.Error(e.message ?: "Erro ao carregar dados")
         }

@@ -4,7 +4,7 @@ import br.com.thefirst.fiap.spaceconnect.common.Resource
 import br.com.thefirst.fiap.spaceconnect.features.auth.domain.model.User
 import br.com.thefirst.fiap.spaceconnect.features.auth.domain.repository.AuthRepository
 
-class CreateUserUseCase (
+class SignUpUseCase (
     private val repository: AuthRepository
 ) {
     suspend operator fun invoke(name: String, email: String, password: String): Resource<User> {
@@ -16,6 +16,6 @@ class CreateUserUseCase (
             return Resource.Error("A senha deve ter no mínimo 6 caracteres")
         }
 
-        return repository.createUser(name, email, password)
+        return repository.signUp(name, email, password)
     }
 }

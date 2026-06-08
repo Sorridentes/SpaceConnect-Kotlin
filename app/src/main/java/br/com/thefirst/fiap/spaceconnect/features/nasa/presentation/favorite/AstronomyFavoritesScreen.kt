@@ -47,7 +47,7 @@ fun AstronomyFavoritesScreen(
     viewModel: AstronomyFavoritesViewModel = koinViewModel()
 ) {
     val favoritesList by viewModel.favoritesList.collectAsState()
-    var selectedTab by remember { mutableIntStateOf(0) }
+    var selectedTab by remember { mutableIntStateOf(1) }
 
 
     Scaffold(

@@ -54,12 +54,12 @@ fun AstronomyListScreen(
     val astronomyList by viewModel.astronomyList.collectAsState()
 
     var selectedTab by remember { mutableIntStateOf(0) }
-    var startDate by remember { mutableStateOf("2025-02-01") }
-    var endDate by remember { mutableStateOf("2025-02-10") }
+    var startDate by remember { mutableStateOf("2025-01-01") }
+    var endDate by remember { mutableStateOf("2025-01-10") }
 
     LaunchedEffect(Unit) {
         if (astronomyList.isEmpty()) {
-            viewModel.getAstronomyByDate(startDate, endDate, true)
+            viewModel.getAstronomyByDate(startDate, endDate)
         }
     }
 

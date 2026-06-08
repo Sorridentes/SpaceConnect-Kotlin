@@ -5,7 +5,7 @@ import br.com.thefirst.fiap.spaceconnect.features.auth.domain.model.User
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
-    suspend fun createUser(name: String, email: String, password: String): Resource<User>
+    suspend fun signUp(name: String, email: String, password: String): Resource<User>
     suspend fun signIn(email: String, password: String): Resource<User>
     suspend fun signOut(): Resource<Unit>
     fun getCurrentUser(): Flow<User?>

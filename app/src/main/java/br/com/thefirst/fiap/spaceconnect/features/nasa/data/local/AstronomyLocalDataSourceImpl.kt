@@ -32,7 +32,7 @@ class AstronomyLocalDataSourceImpl(
             }
     }
 
-    override suspend fun getAstronomyByDate(date: String): AstronomyEntity? {
+    override suspend fun getAstronomyByDateFromCache(date: String): AstronomyEntity? {
         return withContext(Dispatchers.IO) {
             dao.getAstronomyByDate(date)
         }
@@ -69,6 +69,12 @@ class AstronomyLocalDataSourceImpl(
     override suspend fun isFavorite(date: String): Boolean {
         return withContext(Dispatchers.IO) {
             dao.isFavorite(date)
+        }
+    }
+
+    override suspend fun getFavoriteByDate(date: String): Astronomy? {
+        return withContext(Dispatchers.IO) {
+            dao.getFavoriteByDate(date)?.toDomain()
         }
     }
 }

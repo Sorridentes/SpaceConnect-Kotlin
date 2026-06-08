@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.thefirst.fiap.spaceconnect.common.Resource
 import br.com.thefirst.fiap.spaceconnect.features.auth.domain.model.User
-import br.com.thefirst.fiap.spaceconnect.features.auth.domain.usecase.CreateUserUseCase
+import br.com.thefirst.fiap.spaceconnect.features.auth.domain.usecase.SignUpUseCase
 import br.com.thefirst.fiap.spaceconnect.features.auth.domain.usecase.SignInUseCase
 import br.com.thefirst.fiap.spaceconnect.common.UiState
 import br.com.thefirst.fiap.spaceconnect.features.auth.domain.repository.AuthRepository
@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class AuthenticationViewModel(
-    private val createUserUseCase: CreateUserUseCase,
+    private val signUpUseCase: SignUpUseCase,
     private val signInUseCase: SignInUseCase,
     private val signOutUseCase: SignOutUseCase,
     private val authRepository: AuthRepository
@@ -35,10 +35,14 @@ class AuthenticationViewModel(
     private val _currentUserState = MutableStateFlow<User?>(null)
     val currentUserState: StateFlow<User?> = _currentUserState.asStateFlow()
 
+    private val _isAuthReady = MutableStateFlow(false)
+    val isAuthReady: StateFlow<Boolean> = _isAuthReady.asStateFlow()
+
     init {
         authRepository.getCurrentUser()
             .onEach { user ->
                 _currentUserState.value = user
+                _isAuthReady.value = true
             }
             .launchIn(viewModelScope)
     }
@@ -47,7 +51,7 @@ class AuthenticationViewModel(
         viewModelScope.launch {
             _createUserState.value = UiState.Loading
 
-            when (val result = createUserUseCase(name, email, password)) {
+            when (val result = signUpUseCase(name, email, password)) {
                 is Resource.Success -> {
                     _createUserState.value = UiState.Success(result.data)
                 }
@@ -104,5 +108,4 @@ class AuthenticationViewModel(
             }
         }
     }
-
 }

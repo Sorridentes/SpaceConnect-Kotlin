@@ -42,8 +42,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import br.com.thefirst.fiap.spaceconnect.common.UiState
 import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import org.koin.androidx.compose.koinViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -120,7 +123,10 @@ fun AstronomyDetailScreen(
                             .height(350.dp)
                     ) {
                         AsyncImage(
-                            model = astronomy.image,
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data(astronomy.image)
+                                .crossfade(true)
+                                .build(),
                             contentDescription = null,
                             modifier = Modifier.fillMaxSize(),
                             contentScale = ContentScale.Crop

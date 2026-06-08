@@ -8,7 +8,7 @@ interface AstronomyLocalDataSource {
     // Cache
     suspend fun insertAllAstronomy(astronomyList: List<AstronomyEntity>)
     fun getCacheFromDB(): Flow<List<Astronomy>>
-    suspend fun getAstronomyByDate(date: String): AstronomyEntity?
+    suspend fun getAstronomyByDateFromCache(date: String): AstronomyEntity?
     suspend fun getCount(): Int
 
     // Favoritos
@@ -16,4 +16,5 @@ interface AstronomyLocalDataSource {
     suspend fun removeFavorite(date: String)
     fun getFavoriteAstronomyList(): Flow<List<Astronomy>>
     suspend fun isFavorite(date: String): Boolean
+    suspend fun getFavoriteByDate(date: String): Astronomy?
 }

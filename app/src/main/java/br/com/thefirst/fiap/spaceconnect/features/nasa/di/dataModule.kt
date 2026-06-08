@@ -7,6 +7,7 @@ import br.com.thefirst.fiap.spaceconnect.features.nasa.data.remote.AstronomyRemo
 import br.com.thefirst.fiap.spaceconnect.features.nasa.data.remote.AstronomyRemoteDataSourceImpl
 import br.com.thefirst.fiap.spaceconnect.features.nasa.data.repository.AstronomyRepositoryImpl
 import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.repository.AstronomyRepository
+import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
@@ -20,7 +21,9 @@ val dataModule = module {
     }
 
     single {
-        get<NasaDatabase>().astronomyDao()
+        runBlocking {
+            get<NasaDatabase>().astronomyDao()
+        }
     }
 
     single<AstronomyLocalDataSource> {

@@ -13,7 +13,7 @@ class AuthRepositoryImpl(
     private val sessionManager: SessionManager
 ) : AuthRepository {
 
-    override suspend fun createUser(
+    override suspend fun signUp(
         name: String,
         email: String,
         password: String
@@ -67,3 +67,5 @@ class AuthRepositoryImpl(
         return sessionManager.getUser()
     }
 }
+
+
