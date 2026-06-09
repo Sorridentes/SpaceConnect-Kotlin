@@ -1,4 +1,3 @@
-// AstronomyOnboardingScreen.kt (atualizado)
 package br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.onboarding
 
 import androidx.compose.foundation.ExperimentalFoundationApi

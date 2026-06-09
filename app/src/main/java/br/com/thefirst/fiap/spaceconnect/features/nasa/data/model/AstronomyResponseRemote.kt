@@ -2,9 +2,6 @@ package br.com.thefirst.fiap.spaceconnect.features.nasa.data.model
 
 import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.model.Astronomy
 import kotlinx.serialization.Serializable
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 @Serializable
 data class AstronomyResponse(

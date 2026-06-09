@@ -11,7 +11,6 @@ import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.runBlocking
 
 class AstronomyRepositoryImpl(
     private val remoteDataSource: AstronomyRemoteDataSource,

@@ -1,4 +1,3 @@
-// AppNavigation.kt
 package br.com.thefirst.fiap.spaceconnect.navigation
 
 import androidx.compose.runtime.Composable
@@ -8,15 +7,18 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import br.com.thefirst.fiap.spaceconnect.features.auth.presentation.auth.AuthenticationScreen
+import br.com.thefirst.fiap.spaceconnect.features.auth.presentation.auth.AuthenticationViewModel
 import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.detail.AstronomyDetailScreen
 import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.favorite.AstronomyFavoritesScreen
 import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.list.AstronomyListScreen
 import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.onboarding.AstronomyOnboardingScreen
 import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.splash.AstronomySplashScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
+    val authViewModel: AuthenticationViewModel = koinViewModel()
 
     NavHost(
         navController = navController,
@@ -71,6 +73,7 @@ fun AppNavigation() {
                     navController.navigate(AppRoutes.FAVORITES)
                 },
                 onSignOut = {
+                    authViewModel.signOut()
                     navController.navigate(AppRoutes.AUTH) {
                         popUpTo(AppRoutes.HOME) { inclusive = true }
                     }
@@ -100,8 +103,9 @@ fun AppNavigation() {
                     }
                 },
                 onSignOut = {
+                    authViewModel.signOut()
                     navController.navigate(AppRoutes.AUTH) {
-                        popUpTo(AppRoutes.HOME) { inclusive = true }
+                        popUpTo(AppRoutes.FAVORITES) { inclusive = true }
                     }
                 }
             )

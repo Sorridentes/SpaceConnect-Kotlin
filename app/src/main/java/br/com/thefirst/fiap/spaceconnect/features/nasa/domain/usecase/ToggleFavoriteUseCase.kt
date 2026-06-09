@@ -1,9 +1,7 @@
 package br.com.thefirst.fiap.spaceconnect.features.nasa.domain.usecase
 
-import br.com.thefirst.fiap.spaceconnect.common.Resource
 import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.model.Astronomy
 import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.repository.AstronomyRepository
-import kotlinx.coroutines.flow.Flow
 
 class ToggleFavoriteUseCase (
     private val repository: AstronomyRepository

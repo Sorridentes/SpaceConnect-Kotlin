@@ -1,4 +1,3 @@
-// AppRoutes.kt
 package br.com.thefirst.fiap.spaceconnect.navigation
 
 object AppRoutes {

@@ -2,10 +2,7 @@ package br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.favorite
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,7 +15,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.thefirst.fiap.spaceconnect.features.nasa.domain.model.Astronomy
-import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.list.AstronomyCard
 
 @Composable
 fun AstronomyFavoriteListContent(

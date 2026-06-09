@@ -1,4 +1,3 @@
-// features/nasa/di/presentationModule.kt (atualizado)
 package br.com.thefirst.fiap.spaceconnect.features.nasa.di
 
 import br.com.thefirst.fiap.spaceconnect.features.nasa.presentation.detail.AstronomyDetailViewModel
